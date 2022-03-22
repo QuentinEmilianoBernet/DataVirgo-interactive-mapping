@@ -1,2 +1,1 @@
-# Virgo-interactive-mapping
-Digital humanit
+# DataVirgo-interactive-mapping
