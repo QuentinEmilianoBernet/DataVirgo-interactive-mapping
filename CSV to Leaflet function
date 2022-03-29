@@ -133,7 +133,9 @@ def to_leaflet(df) :
 #This "var data" ↑ refers to a JS variable that will contain all of our data, now printed by our iterable algorithm. All the data is put in a form of JS Dictionnary.
 #The variable leaflet_point (without s) contains the ephemeral data of each element of our dictionnary, equivalent for a ow of our dataset. Each iteration sets a new variable and prints it into
 #our leaflet_points variable, inside the "var data" variable of our JS code. The code iterates for each row of the dataset, based on the lenght of the "places" variable, starting at 1 (not 0).
-    
+  
+#With this algorithm we are going to print structured data:
+
     for i in places[1:]:
     
         x = x+1
@@ -164,7 +166,7 @@ def to_leaflet(df) :
         var sliderLayer = new L.LayerGroup().addTo(map);	//layer contain slider elements
 
         
-         ////////////populate map with markers from printed data 
+////////////Now this second iteration will set the vars in JavaScript for each row of our DS. Each of that row will became a marker in Leaflet.
         for(i in data) {
             var title = data[i].title,	//value searched
                 loc = data[i].loc,		//position found
@@ -176,6 +178,8 @@ def to_leaflet(df) :
                 date_fin = data[i].date_fin
                 img = data[i].img
                 
+ ////////////Marker settings for leaflet, set the properties you want, extracted from the dataset and strcutured by Python
+           
 
             var marker = new L.marker (new L.latLng(loc), {title:title, opacity: 1, properties:{date_start:date_start, date_fin:date_fin}}).bindPopup(title);
                         searchLayer.addLayer(marker);
@@ -192,8 +196,9 @@ def to_leaflet(df) :
                         
                         searchLayer.addLayer(circle);
                         sliderLayer.addLayer(circle);
-                        
-                        
+                     
+  ////////////Now with this switch statement, we distribute the markers on the right layers, according to their properties
+                     
                 switch (Column5) {
                     case 'True':
                             LayerGroup1.addLayer(circle);
@@ -244,6 +249,8 @@ def to_leaflet(df) :
 
         map.addControl( controlSearch );
         
+        //Setting the filters for layers control
+        
         var filters = {"All":sliderLayer,
         "Filter 1":LayerGroup1,
         "Filter 2":LayerGroup2,
@@ -266,6 +273,7 @@ def to_leaflet(df) :
         
         });
         
+        //Very important: creation of the range slider and its settings.
         
         var slider = document.getElementById('slider');
         
@@ -284,6 +292,8 @@ def to_leaflet(df) :
                 console.log(e)
                 
                 map.removeLayer(searchLayer)
+                
+            //Functions to synchronize our layers with the range sliders, to interact with the markers.
                 
                 
                 LayerGroup1.eachLayer(function (layer) {
@@ -316,7 +326,7 @@ def to_leaflet(df) :
             })
 
         
-        
+     //end of the HTML file
             
         </script>
 
