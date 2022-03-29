@@ -140,7 +140,7 @@ def to_leaflet(df) :
     
         x = x+1
 
-            leaflet_point = '''{"loc": ['''+str(lat[x])+","+str(lon[x])+'''],
+        leaflet_point = '''{"loc": ['''+str(lat[x])+","+str(lon[x])+'''],
             "title":"'''+name[x]+", "+labels[x]+", "+date_label[x]+", "+Cities[x]+'''.",
             "Indice":'''+str(Indice[x])+''',
             "date_start":'''+str(date_start[x])+''',
