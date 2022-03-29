@@ -1,8 +1,6 @@
 #Importations
 
 import pandas as pd
-import leaflet
-import json
 import codecs
 
 #set the variable for the csv file you want to use
