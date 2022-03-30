@@ -34,7 +34,7 @@ def to_folium(df) :
 
 
     boulder_coords = [int(meanlat), int(meanlon)]
-    my_map = folium.Map(location = boulder_coords, tiles="stamentoner", zoom_start = 5)
+    my_map = folium.Map(location = boulder_coords, tiles="cartodbpositron", zoom_start = 5)
     
     
     for i in points[1:]:
