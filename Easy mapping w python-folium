@@ -41,15 +41,12 @@ def to_folium(df) :
                                       
         if str(points[x])== str(points[x+1]) :
             exec(points[x] + str(x) + " = " + "["+ places[x] + "]")
+            exec("folium.CircleMarker("+ points[x] + str(x) + ", radius=" ", popup = '"+ str(labels[x]) +"', color= 'none', fill=True, fill_color='blue').add_to(my_map)")
+                
                    
         else:
             exec(points[x] + str(x*y) + " = " + "["+ places[x] + "]")
+            exec("folium.CircleMarker(" + points[x] + str(x*y) + ", radius=" ", popup = '"+ str(labels[x]) +"', color= 'none', fill=True, fill_color='blue').add_to(my_map)")
 
 
-            if str(points[x])== str(points[x+1]):
-                exec("folium.CircleMarker("+ points[x] + str(x) + ", radius=" ", popup = '"+ str(labels[x]) +"', color= 'none', fill=True, fill_color='blue').add_to(my_map)")
-                          
-            else:
-                exec("folium.CircleMarker(" + points[x] + str(x*y) + ", radius=" ", popup = '"+ str(labels[x]) +"', color= 'none', fill=True, fill_color='blue').add_to(my_map)")
-    
     return my_map
