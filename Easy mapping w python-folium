@@ -1,6 +1,7 @@
 import folium
 import pandas as pd
 import leaflet
+import codecs
 
 
 
