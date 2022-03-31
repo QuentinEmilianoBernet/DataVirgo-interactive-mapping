@@ -48,5 +48,5 @@ def to_folium(df) :
             exec(points[x] + str(x*y) + " = " + "["+ places[x] + "]")
             exec("folium.CircleMarker(" + points[x] + str(x*y) + ", radius=" ", popup = '"+ str(labels[x]) +"', color= 'none', fill=True, fill_color='blue').add_to(my_map)")
 
-
+    map.save("index.html")
     return my_map
