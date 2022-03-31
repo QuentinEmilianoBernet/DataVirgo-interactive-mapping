@@ -11,6 +11,8 @@ df = pd.read_csv(r"C:\Users\User\Documents\your.csv", encoding='latin-1')
 def to_folium(df) :
 
     x = 0
+    y = 0
+    
     points = df["titreoeuvre"].astype(str)
     
     df['Coordonnées'] = df[df.columns[10:12]].apply(
@@ -38,6 +40,9 @@ def to_folium(df) :
     
     
     for i in points[1:]:
+        x +=1
+        y +=1
+    
                                       
         if str(points[x])== str(points[x+1]) :
             exec(points[x] + str(x) + " = " + "["+ places[x] + "]")
