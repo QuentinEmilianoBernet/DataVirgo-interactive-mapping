@@ -71,17 +71,16 @@ that will be read by the algorithm and set into the dictionnary.
 #With this algorithm we are going to print structured data:
 
     for i in places[1:]:
-    
-        x = x+1
 
-        data_point = '''{"loc": ['''+str(lat[x])+","+str(lon[x])+'''],
-            "title":"'''+name[x]+", "+labels[x]+", "+date_label[x]+", "+Cities[x]+'''.",
-            "Indice":'''+str(Indice[x])+''',
-            "date_start":'''+str(date_start[x])+''',
-            "date_fin":'''+str(date_fin[x])+''',
-            "Column3":"'''+str(Column3[x])+'''",
-            "Column4":"'''+str(Column4[x])+'''",
-            "Column5":"'''+str(Column5[x])+'''"
+
+        data_point = '''{"loc": ['''+str(lat[i])+","+str(lon[i])+'''],
+            "title":"'''+name[i]+", "+labels[x]+", "+date_label[i]+", "+Cities[i]+'''.",
+            "Indice":'''+str(Indice[i])+''',
+            "date_start":'''+str(date_start[i])+''',
+            "date_fin":'''+str(date_fin[i])+''',
+            "Column3":"'''+str(Column3[i])+'''",
+            "Column4":"'''+str(Column4[i])+'''",
+            "Column5":"'''+str(Column5[i])+'''"
             },
                 '''
         
