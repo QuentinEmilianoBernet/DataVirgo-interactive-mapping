@@ -1,103 +1,48 @@
-#Importations
-
 import pandas as pd
-import codecs
 
-#set the variable for the csv file you want to use
-df = pd.read_csv(r"your_csv")
+df = pd.read_csv(r"/content/votre_fichier.csv")
 
-#declaring our function
-def to_data(df) :
 
-#The first step is to set variables for each of the columns we want in our dictionnary. Each column contains a different kind of property,
-that will be read by the algorithm and set into the dictionnary.
-#It can be labels, numeric data (like dates), or some other stuff that will interact with the algoritm to be displayed in the way we want.
+
+#On doit d'abord assigner les valeurs à des variables, on nettoie aussi les données au passage ou on leur applique n'importe quel traitement jugé nécessaire.
+#Tout doit être de classe 'String', nous appliquons donc la méthode 'astype()'. Je vous conseille de remplacer le carcatère "'" par une "’" apostrophe sinon cela risque de créer
+#des dysfonctionnements;
     
-#We need to clean the data we want to use. Depending on what you have in your CSV, you must be careful for the data to be correctly read by JS.
+Name = df["Column2"].astype(str)
+Name = Name.replace("'","’")
+Place = df["Column1"].astype(str)
+Place = Place.replace("'","’")
 
-    df["Column1_label"] = df["Column1"].astype(str)
-    df["Column1"] = df["Column1"].astype(str)
-    df["Column1"] = df.Column1.apply(lambda x: x.replace(" _", ""))
-    df["Column1"] = df.Column1.apply(lambda x: x.replace("è", "e"))
-    df["Column1"] = df.Column1.apply(lambda x: x.replace("»", ""))
-    #etc....
-    
-#Blank rows can interrupt the code, so make sure you fill all the blank spaces using the "fillna" function.
-
-    df["Indice"] = df["Indice"].fillna(0.0)
-    
-#For some operations (like apply or concatenations) you will need to convert your data as "str" (string)
-    
-    df["Name"] = df["Name"].astype(str)
-    df["Column1_label"] = df["Column1_label"].astype(str)
-    df["Column2"] = df["Column2"].astype(str)
+lat = df["lat"].astype(str)
+lon = df["lon"].astype(str)
     
 
-#set as much variables as you need for your columns, repeat operations.
-    
-    points = df["Column1"]
-    places = df["Coordinates"]
-    labels = df["Column1_label"]
-    labels = labels.replace("nan", "unknown")
-    Indice = df["Indice"].astype(int)
-    Cities = df["Column2"].astype(str)
-    name = df["Name"].astype(str)
-    date_label = df["Date(circa)"].astype(str)
-    date_label = date_label.replace("nan", "unknown")
-    date_start = df["Date_start"].astype(str)
-    date_start = date_start.apply(lambda x: x.replace(".0", ""))
-    date_fin = df["Date_fin"].astype(str)
-    date_fin = date_fin.apply(lambda x: x.replace(".0", ""))
-    
-    Column3 = df["Column3"].fillna("false")
-    Column3 = Column3.astype(str)
-    Column4 = df["Column4"].fillna("false")
-    Column4 = Column4.astype(str)
-    Column5 = df["Column5"].fillna("false")
-    Column5 = Column5.astype(str)
-    
-    x=0
-    
-    
+#à présent, nous allons créer la variable qui va stocker notre dictionnaire, programmé en JavaScript. Le Javascript est ici de classe "String" (en orange),
+# il n'est considéré que comme du texte et ne vaudra comme script que lorsqu'il sera ouvert en tant qu fichier Javascript. Ici nous avons déclaré la variable (var) et ouvert le premier crochet.
 
-    data_points = '''
-            
-            var data = [
-            '''
-#This "var data" ↑ refers to the JS variable that will contain all of our data, now printed by our iterable algorithm. All the data is put in a form of JS Dictionnary.
-#The variable data_point (without s) contains the ephemeral data of each element of our dictionnary, equivalent for a ow of our dataset. Each iteration sets a new variable and prints it into
-#our leaflet_points variable, inside the "var data" variable of our JS code. The code iterates for each row of the dataset, based on the lenght of the "places" variable, starting at 1 (not 0).
+data = '''            
+var data = [
+'''
+#Nous procédons maintenant à une itération, qui va construire chaque bloc de notre dictionnaire, en fonction de la forme que vous voulez lui donner, et de ce que vous voulez assigner à chaque propriété.
+#Nous utilisons un type de string qui peut être complété par des variables, amenées à changer à chaque itération, c'est ce qui est placé entre les accolades. Ici il y a donc deux propriétés : "loc" et "title".
+
+for i in range(len(df)):
   
-#With this algorithm we are going to print structured data:
-
-    for i in places[1:]:
-
-
-        data_point = '''{"loc": ['''+str(lat[i])+","+str(lon[i])+'''],
-            "title":"'''+name[i]+", "+labels[x]+", "+date_label[i]+", "+Cities[i]+'''.",
-            "Indice":'''+str(Indice[i])+''',
-            "date_start":'''+str(date_start[i])+''',
-            "date_fin":'''+str(date_fin[i])+''',
-            "Column3":"'''+str(Column3[i])+'''",
-            "Column4":"'''+str(Column4[i])+'''",
-            "Column5":"'''+str(Column5[i])+'''"
-            },
-                '''
+  data_point = f'{{"loc":[{lat[i]},{lon[i]}],"title":"{Name[i]}, {Place[i]}"}},'
         
-        data_points += str(data_point)
-        
-    x=0
+  data += data_point
+
     
-#Now we print the the end of the data variable, we close it
-        
-    data_points += '''
-        ]'''
+#Maintenant nous refermons la variable et son crochet. Notez le décalage entre cette partie du code et la aprtie juste au dessus : il s'agit de l'indentation, elle indique de quel opérateur dépend
+#chaque ligne de code. La partie indentée ci-dessus dépend de la boucle 'for', elle est donc répétée. Or la variable data ne doit être fermée qu'une seule fois, elle est donc indentée différemment.
+data += '''
+]'''
 
-    #Now we need to create a decent HTML file, before writing the code contained by our leaflet_points variable, in it.
+#Now we need to create a decent HTML file, before writing the code contained by our leaflet_points variable, in it.
 
-    utf8 = leaflet_points.encode('utf-8')
-    text_file = open(r"C:\Users\Username\Documents\data.js", "w", encoding='utf-8')
-    text_file.write(data_points)
-    text_file.close()
 
-    return print("open file")
+text_file = open(r"/content/data.js", "w", encoding='utf-8')
+text_file.write(data)
+text_file.close()
+
+#Il ne vous reste plus qu'à télécharger le fichier contenant les données structurées. Je vous conseille de nommer votre fichier individuellement.
