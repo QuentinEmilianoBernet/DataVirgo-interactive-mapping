@@ -149,7 +149,7 @@ map.zoomControl.setPosition('verticalcenterright');
 
         
         
-         ////////////populate map with markers from datavirgo's data and markers settings
+         ////////////populate map with markers from datavirgo's data and markers settings, repartition on the different layers
         for(i in data) {
             var title = data[i].title,
                 loc = data[i].loc,
@@ -797,7 +797,7 @@ map.zoomControl.setPosition('verticalcenterright');
         
         
         
-        
+        //// Filters settings
         var filtres = {"Toutes":sliderLayer,
         "Vierge de l'Apocalypse":Vierge_de_l_Apocalypse,
         "Vierge allaitante":Vierge_allaitante,
@@ -817,7 +817,7 @@ map.zoomControl.setPosition('verticalcenterright');
         "Hortus Clausus":HortusClausus}
         
         
-        // FONCTIONS
+        // FONCTIONS : control layers, search
 
         
         L.control.layers(null, filtres).addTo(map);
@@ -868,6 +868,7 @@ map.zoomControl.setPosition('verticalcenterright');
         
         });
 
+        // Slider configuration
 
         var slider = document.getElementById('slider');
         
@@ -1004,10 +1005,10 @@ map.zoomControl.setPosition('verticalcenterright');
                 
                  
             })
-            
-            TimeControl = map.timeDimension
-            
-            
+        
+/// Time control settings
+        TimeControl = map.timeDimension        
+          
         TimeControl.on('timeload', function(e) {
         console.log(e)
         
