@@ -1,0 +1,10 @@
+Marker.on('mouseover', function (e) {
+                        console.log(e);
+                    My_layer.eachLayer(function (layer) {
+                        if (layer.options.properties.Index==e.target.options.properties.Origin || layer.options.properties.Origin==e.target.options.properties.Index) {
+                        var loc1 = e.target.options.properties.loc;
+                        var loc2 = layer.options.properties.loc;
+                        console.log(loc1);
+                        console.log(loc2);
+                        var endroits = [loc1,loc2];
+                        L.polyline(endroits, {color: 'palegoldenrod'}).addTo(polyLayer);}
