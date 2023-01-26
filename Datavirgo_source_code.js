@@ -6,7 +6,8 @@ $(function () {
               $("#map").tooltip("disable");
             });
           });
-          
+
+////define map          
             var map = L.map('map', {
             zoom: 5,
             center : [46.9111446396763,5.453353955768824],
@@ -39,7 +40,7 @@ $(function () {
                 
                 L.control.scale().addTo(map)
                 
-                // Create additional Control placeholders
+                // Configure control placeholders
                 function addControlPlaceholders(map) {
                     var corners = map._controlCorners,
                         l = 'leaflet-',
@@ -57,6 +58,8 @@ $(function () {
 
 // Change the position of the Zoom Control to a newly created placeholder.
 map.zoomControl.setPosition('verticalcenterright');
+
+/// Icons parameters and url
                 
             var myIcon = L.icon({
                 iconUrl: 'https://cdn-icons-png.flaticon.com/512/787/787450.png',
@@ -88,11 +91,13 @@ map.zoomControl.setPosition('verticalcenterright');
                 iconAnchor: [90, 72]
             });
 
+/// Map layers
+
         var searchLayer = new L.LayerGroup().addTo(map);	//layer contain searched elements
         var sliderLayer = new L.LayerGroup().addTo(map);	//layer contain slider elements
-
         var polyLayer = new L.LayerGroup().addTo(map);
         
+/// Map's legend
         var legend = L.control({ position: "bottomright" });
         
         var oms = new OverlappingMarkerSpiderfier(map);
@@ -104,16 +109,12 @@ map.zoomControl.setPosition('verticalcenterright');
             div.innerHTML += '<i id="i1" style="background: #000000"></i><span>Occurrence localisée</span><br>';
             div.innerHTML += '<i style=" background: #3522e0"></i><span>Occurrence estimée et aire de diffusion</span><br>';
             div.innerHTML += '<i id="i3" style="background: palegoldenrod"></i><span>Filiations connues ou supposées</span><br>';
-
-
-
-
           return div;
         };
 
         legend.addTo(map);
 
-        
+////Configure filters        
         var Vierge_allaitante = new L.LayerGroup();
             Vierge_de_l_Apocalypse = new L.LayerGroup();
             Vierge_et_Dieu = new L.LayerGroup();
@@ -148,10 +149,10 @@ map.zoomControl.setPosition('verticalcenterright');
 
         
         
-         ////////////populate map with markers from sample data
+         ////////////populate map with markers from datavirgo's data and markers settings
         for(i in data) {
-            var title = data[i].title,	//value searched
-                loc = data[i].loc,		//position found
+            var title = data[i].title,
+                loc = data[i].loc,
                 label = data[i].label,
                 degré = data[i].degré
                 allaitante = data[i].allaitante
